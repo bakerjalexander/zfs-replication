@@ -17,7 +17,7 @@ for sync_to_local in "${remote_datasets[@]}"; do
    echo "`date` starting sync of $sync_to_local " >> $log 2>&1
    /usr/local/sbin/syncoid --recvoptions="u" --sendoptions="p" --no-sync-snap --quiet \
       -c aes128-gcm@openssh.com -r root@$remote_server:"$sync_to_local" "$sync_to_local" 2>&1 | \
-      ts '%a %b %e %H:%M:%S %Z %Y' >> $log 2>&1
+      ts '%a %b %e %H:%M:%S %Z %Y' >> $log 2>&1${RECVOPTS}
    echo "`date` synced $sync_to_local " >> $log 2>&1
    echo "`date` checking for local snapshots not on remote server" >> $log 2>&1
    extra_snaps_array=()
