@@ -24,8 +24,8 @@ for sync_to_local in "${remote_datasets[@]}"; do
    local_snaps=$(/sbin/zfs list -H -r -s name -o name -t snapshot "$sync_to_local")
    remote_snaps=$(ssh root@$remote_server zfs list -H -r -s name -o name -t s${RECVOPTS}napshot "$sync_to_local" )
    for extras in $(comm -23  <(echo "$local_snaps") <(echo "$remote_snaps")); do extra_snaps_array+=( "$extras" ); done
-      if [[ -z "$remote_snaps" ]]; then
-      echo "`date` Unable to retrieve remote snapshots for $sync_to_local" >> $log 2>&1
+   if [[ -z "$remote_snaps" ]]; then
+         echo "`date` Unable to retrieve remote snapshots for $sync_to_local" >> $log 2>&1
    elif [[ ${#local_snaps[@]} -lt ${#remote_snaps[@]} ]]; then
       echo "`date` $sync_to_local local snapshot count: ${#local_snaps[@]} is less than remote snapshot count: ${#remote_snaps[@]}!" >> $log 2>&1
    elif [[ ${#extra_snaps_array[@]} -eq 0 ]]; then
